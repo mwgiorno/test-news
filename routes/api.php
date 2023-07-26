@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->group(function() {
     
 });
+
+Route::get('/sections', [SectionController::class, 'index']);
+Route::get('/sections/{section:slug}', [SectionController::class, 'get']);
+Route::patch('/sections/{section:slug}', [SectionController::class, 'update']);
+Route::post('/sections', [SectionController::class, 'create']);
+
 
 require __DIR__.'/auth.php';
