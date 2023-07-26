@@ -1,0 +1,30 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Section;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Article>
+ */
+class ArticleFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'slug' => fake()->slug(),
+            'author_id' => User::factory(),
+            'section_id' => Section::factory(),
+            'headline' => fake()->word(),
+            'body' => fake()->text(500),
+            'thumbnail' => fake()->imageUrl(1920, 1080, 'landscapes', true, null, false, 'jpg')
+        ];
+    }
+}
