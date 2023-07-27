@@ -12,9 +12,13 @@ use Illuminate\Validation\Rule;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return ArticleResource::collection(Article::published()->get());
+        $articles = Article::published()
+            ->filter($request->only('section', 'headline'))
+            ->paginate();
+
+        return ArticleResource::collection($articles);
     }
 
     public function create(CreateRequest $request)
