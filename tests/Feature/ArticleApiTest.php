@@ -137,4 +137,16 @@ class ArticleApiTest extends TestCase
                 'thumbnail' => $newArticle->thumbnail
             ]);
     }
+
+    public function test_making_a_delete_request(): void
+    {
+        $article = Article::factory()->create();
+
+        $response = $this->actingAs($this->user)
+                        ->deleteJson("/api/articles/{$article->id}");
+
+        $response->assertStatus(200);
+        
+        $this->assertSoftDeleted($article);
+    }
 }

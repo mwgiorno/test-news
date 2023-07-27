@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SectionController;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/articles/{article}', [ArticleController::class, 'get']);
     Route::patch('/articles/{article}', [ArticleController::class, 'update']);
     Route::post('/articles', [ArticleController::class, 'create']);
+    Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
 });
 
 Route::get('/sections', [SectionController::class, 'index']);

@@ -57,4 +57,9 @@ class ArticleController extends Controller
 
         return new ArticleResource($article->fresh());
     }
+
+    public function destroy(Article $article)
+    {
+        $article->delete();
+    }
 }
