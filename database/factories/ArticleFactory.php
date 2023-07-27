@@ -24,7 +24,20 @@ class ArticleFactory extends Factory
             'section_id' => Section::factory(),
             'headline' => fake()->word(),
             'body' => fake()->text(500),
-            'thumbnail' => fake()->imageUrl(1920, 1080, 'landscapes', true, null, false, 'jpg')
+            'thumbnail' => fake()->imageUrl(1920, 1080, 'landscapes', true, null, false, 'jpg'),
+            'published' => false
         ];
+    }
+
+    /**
+     * Indicate that the article is published.
+     */
+    public function published(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'published' => true,
+            ];
+        });
     }
 }

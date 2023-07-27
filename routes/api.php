@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/articles', [ArticleController::class, 'index']);
+
 Route::middleware(['auth:sanctum'])->group(function() {
-    
+    Route::get('/articles/{article}', [ArticleController::class, 'get']);
+    Route::patch('/articles/{article}', [ArticleController::class, 'update']);
+    Route::post('/articles', [ArticleController::class, 'create']);
 });
 
 Route::get('/sections', [SectionController::class, 'index']);

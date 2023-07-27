@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class Article extends Model
 {
@@ -21,7 +22,27 @@ class Article extends Model
         'section_id',
         'headline',
         'body',
-        'thumbnail'
+        'thumbnail',
+        'published'
+    ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'section:id,slug,name',
+        'author:id,name,email'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'published' => 'boolean',
     ];
 
     public static function new(
@@ -30,7 +51,8 @@ class Article extends Model
         int $section,
         string $headline,
         string $body,
-        string $thumbnail
+        string $thumbnail,
+        bool $published = false
     ) 
     {
         return static::create([
@@ -39,7 +61,8 @@ class Article extends Model
             'section_id' => $section,
             'headline' => $headline,
             'body' => $body,
-            'thumbnail' => $thumbnail
+            'thumbnail' => $thumbnail,
+            'published' => $published
         ]);
     }
 
@@ -50,6 +73,14 @@ class Article extends Model
 
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    /**
+     * Scope a query to only include published articles.
+     */
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('published', true);
     }
 }
