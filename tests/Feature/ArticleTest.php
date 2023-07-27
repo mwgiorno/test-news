@@ -33,4 +33,13 @@ class ArticleTest extends TestCase
 
         $this->assertModelExists($article);
     }
+
+    public function test_soft_deletes(): void
+    {
+        $article = Article::factory()->create();
+
+        $article->delete();
+
+        $this->assertSoftDeleted($article);
+    }
 }

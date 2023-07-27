@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
-    use Filterable, HasFactory;
+    use Filterable, HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
