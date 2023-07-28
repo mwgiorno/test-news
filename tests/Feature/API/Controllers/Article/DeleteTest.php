@@ -11,7 +11,7 @@ use Tests\TestCase;
 class DeleteTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     protected $user;
 
     public function setUp() :void
@@ -21,7 +21,7 @@ class DeleteTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_making_a_delete_request(): void
+    public function test_an_article_is_soft_deleted(): void
     {
         $article = Article::factory()->create();
 
