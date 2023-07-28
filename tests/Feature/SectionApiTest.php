@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Http\Resources\SectionResource;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
@@ -12,6 +13,15 @@ use Tests\TestCase;
 class SectionApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected $user;
+
+    public function setUp() :void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
 
     public function test_making_a_get_all_request(): void
     {
@@ -31,10 +41,11 @@ class SectionApiTest extends TestCase
         $slug = fake()->slug();
         $name = fake()->word();
 
-        $response = $this->postJson(
-            '/api/sections',
-            ['slug' => $slug, 'name' => $name]
-        );
+        $response = $this->actingAs($this->user)
+            ->postJson(
+                '/api/sections',
+                ['slug' => $slug, 'name' => $name]
+            );
  
         $response
             ->assertStatus(201)
@@ -64,10 +75,11 @@ class SectionApiTest extends TestCase
         $newSlug = fake()->slug();
         $newName = fake()->word();
 
-        $response = $this->patchJson(
-            '/api/sections/' . $section->slug,
-            ['slug' => $newSlug, 'name' => $newName]
-        );
+        $response = $this->actingAs($this->user)
+            ->patchJson(
+                '/api/sections/' . $section->slug,
+                ['slug' => $newSlug, 'name' => $newName]
+            );
  
         $response
             ->assertStatus(200)
@@ -83,10 +95,11 @@ class SectionApiTest extends TestCase
 
         $newName = fake()->word();
 
-        $response = $this->patchJson(
-            '/api/sections/' . $sections[0]->slug,
-            ['slug' => $sections[1]->slug, 'name' => $newName]
-        );
+        $response = $this->actingAs($this->user)
+            ->patchJson(
+                '/api/sections/' . $sections[0]->slug,
+                ['slug' => $sections[1]->slug, 'name' => $newName]
+            );
  
         $response
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)

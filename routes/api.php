@@ -35,9 +35,10 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::delete('tokens', function(Request $request) {
         $request->user()->tokens()->delete();
     });
+
+    Route::patch('/sections/{section:slug}', [SectionController::class, 'update']);
+    Route::post('/sections', [SectionController::class, 'create']);
 });
 
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/sections/{section:slug}', [SectionController::class, 'get']);
-Route::patch('/sections/{section:slug}', [SectionController::class, 'update']);
-Route::post('/sections', [SectionController::class, 'create']);
