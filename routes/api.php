@@ -23,9 +23,9 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/{article}', [ArticleController::class, 'get']);
 
 Route::middleware(['auth:sanctum'])->group(function() {
-    Route::get('/articles/{article}', [ArticleController::class, 'get']);
     Route::patch('/articles/{article}', [ArticleController::class, 'update']);
     Route::post('/articles', [ArticleController::class, 'create']);
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
