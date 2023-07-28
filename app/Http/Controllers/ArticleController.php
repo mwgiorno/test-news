@@ -29,7 +29,8 @@ class ArticleController extends Controller
             $request->section,
             $request->headline,
             $request->body,
-            $request->thumbnail
+            $request->thumbnail,
+            true
         );
 
         $article->load('section', 'author');
