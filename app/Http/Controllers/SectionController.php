@@ -37,7 +37,7 @@ class SectionController extends Controller
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('sections', 'slug')->ignore($section->slug)
+                Rule::unique('sections', 'slug')->ignore($section->id)
             ],
             'name' => [
                 'required',
