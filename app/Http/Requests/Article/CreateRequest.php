@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Article;
 
+use App\Rules\ReachableURL;
+use App\Rules\ValidImageURL;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateRequest extends FormRequest
@@ -26,7 +28,12 @@ class CreateRequest extends FormRequest
             'section' => 'required|exists:sections,id',
             'headline' => 'required|string|max:255',
             'body' => 'required|string',
-            'thumbnail' => 'required|url'
+            'thumbnail' => [
+                'required',
+                'url',
+                new ReachableURL,
+                new ValidImageURL
+            ]
         ];
     }
 }
