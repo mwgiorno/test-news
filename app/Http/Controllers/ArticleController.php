@@ -45,21 +45,24 @@ class ArticleController extends Controller
     public function update(Article $article, UpdateRequest $request)
     {
         $request->validate([
-            'slug' => Rule::unique('articles', 'slug')
-                        ->ignore($article->slug)
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('articles', 'slug')
+                    ->ignore($article->slug)
+            ]
         ]);
 
         $article->fill([
-            'slug' => $request->slug,
-            'section_id' => $request->section,
-            'headline' => $request->headline,
-            'body' => $request->body,
-            'thumbnail' => $request->thumbnail
+            'slug' => $request->input('slug', $article->slug),
+            'section_id' => $request->input('section', $article->section_id),
+            'headline' => $request->input('headline', $article->headline),
+            'body' => $request->input('body', $article->body),
+            'thumbnail' => $request->input('thumbnail', $article->thumbnail)
         ]);
 
         $article->save();
-
-        return new ArticleResource($article->fresh());
     }
 
     public function destroy(Article $article)

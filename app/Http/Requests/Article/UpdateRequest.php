@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Article;
 
+use App\Rules\ReachableURL;
+use App\Rules\ValidImageURL;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -22,11 +24,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => 'required|string|max:255',
-            'section' => 'required|exists:sections,id',
-            'headline' => 'required|string|max:255',
-            'body' => 'required|string',
-            'thumbnail' => 'required|url'
+            'section' => 'nullable|exists:sections,id',
+            'headline' => 'nullable|string|max:255',
+            'body' => 'nullable|string',
+            'thumbnail' => [
+                'nullable',
+                'url',
+                new ReachableURL,
+                new ValidImageURL
+            ]
         ];
     }
 }
