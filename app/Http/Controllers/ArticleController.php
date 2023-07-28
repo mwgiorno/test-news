@@ -44,6 +44,8 @@ class ArticleController extends Controller
 
     public function update(Article $article, UpdateRequest $request)
     {
+        $this->authorize('update', $article);
+
         $request->validate([
             'slug' => [
                 'nullable',
@@ -67,6 +69,8 @@ class ArticleController extends Controller
 
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $article->delete();
     }
 }
