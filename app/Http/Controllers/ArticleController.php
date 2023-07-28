@@ -16,7 +16,7 @@ class ArticleController extends Controller
     {
         $articles = Article::published()
             ->filter($request->only('section', 'headline'))
-            ->paginate();
+            ->paginateFilter();
 
         return ArticleResource::collection($articles);
     }

@@ -22,7 +22,7 @@ class ArticleFactory extends Factory
             'slug' => fake()->slug(),
             'author_id' => User::factory(),
             'section_id' => Section::factory(),
-            'headline' => fake()->word(),
+            'headline' => fake()->sentence(),
             'body' => fake()->text(500),
             'thumbnail' => fake()->imageUrl(1920, 1080, 'landscapes', true, null, false, 'jpg'),
             'published' => false
